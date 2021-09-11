@@ -1,0 +1,6 @@
+server:
+  port: 9591
+
+spring:
+  application:
+    name: CART-SERVICE

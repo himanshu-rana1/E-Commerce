@@ -1,0 +1,6 @@
+server:
+  port: 9590
+
+spring:
+  application:
+    name: CATALOG-SERVICE

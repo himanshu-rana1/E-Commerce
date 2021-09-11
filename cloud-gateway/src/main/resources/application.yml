@@ -1,0 +1,60 @@
+server:
+  port: 9191
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: CATALOG-SERVICE
+          uri: lb://CATALOG-SERVICE
+          predicates:
+           - Path=/catalog/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: CATALOG-SERVICE
+                fallbackuri: forward:/catalogServiceFallBack
+        - id: CART-SERVICE
+          uri: lb://CART-SERVICE
+          predicates:
+            - Path=/cart/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: CART-SERVICE
+                fallbackuri: forward:/cartServiceFallBack
+        - id: ORDER-SERVICE
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/order/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: ORDER-SERVICE
+                fallbackuri: forward:/orderServiceFallBack
+        - id: PAYMENT-SERVICE
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/payment/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: PAYMENT-SERVICE
+                fallbackuri: forward:/paymentServiceFallBack
+
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+

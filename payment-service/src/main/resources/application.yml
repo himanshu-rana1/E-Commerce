@@ -1,0 +1,6 @@
+server:
+  port: 9593
+
+spring:
+  application:
+    name: PAYMENT-SERVICE

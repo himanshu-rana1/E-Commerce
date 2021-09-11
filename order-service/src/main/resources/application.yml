@@ -1,0 +1,6 @@
+server:
+  port: 9592
+
+spring:
+  application:
+    name: ORDER-SERVICE
